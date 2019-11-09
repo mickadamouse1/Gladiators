@@ -14,11 +14,15 @@ var runWidthScale = runWidth / scale;
 var runHeightScale = runHeight / scale;
 
 function init() {
+  runRight();
+  runLeft();
+}
+
+function runRight() {
   var frameX = 0;
   var canvasX = 0;
   setInterval(function() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawFrame(frameX, 0, canvasX, 230);
+    drawFrame(img, frameX, 0, canvasX, 230);
     frameX++;
     canvasX += 8;
     if (frameX > 10) frameX = 0;
@@ -26,8 +30,21 @@ function init() {
   }, 40);
 }
 
-function drawFrame(frameX, frameY, canvasX, canvasY) {
-  ctx.drawImage(img,
+function runLeft() {
+  var frameX = 0;
+  var canvasX = 2;
+  setInterval(function() {
+    drawFrame(img, frameX, 0, canvasX, 230);
+    frameX++;
+    canvasX += 8;
+    if (frameX > 10) frameX = 0;
+    if (canvasX > canvas.width) canvasX = -100;
+  }, 40);
+}
+
+function drawFrame(source, frameX, frameY, canvasX, canvasY) {
+  ctx.clearRect(canvasX, canvasY, runWidthScale, runHeightScale);
+  ctx.drawImage(source,
                     frameX * runWidth, frameY * runHeight,
                     runWidth, runHeight, canvasX, canvasY,
                     runWidthScale, runHeightScale);
